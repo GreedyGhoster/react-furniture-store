@@ -2,8 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "/public/Style.css";
 import Footer from "./components/Footer";
+import ShowAboutItem from "./components/ShowAboutItem";
 import Header from "./components/Header";
+import Categories from "./components/Categories";
 import Products from "./components/Products";
+
 export default function App() {
   const [items] = useState([
     {
@@ -56,14 +59,59 @@ export default function App() {
     },
   ]);
   const [orders, setOrders] = useState([]);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [showAboutItem, setShowAboutItem] = useState(false);
+  const [fullItem, setFullItem] = useState({});
+
+  useEffect(() => {
+    setCurrentItems(items);
+  }, []);
+
   function addToOrder(item) {
-    setOrders([...orders, item]);
+    let isInArray = false;
+    orders.forEach((el) => {
+      if (el.id === item.id) {
+        isInArray = true;
+      }
+    });
+    if (!isInArray) {
+      setOrders([...orders, item]);
+    }
+  }
+
+  function chooseCategory(category) {
+    if (category === "all") {
+      return setCurrentItems(items);
+    } else {
+      return setCurrentItems(items.filter((el) => el.category === category));
+    }
+  }
+
+  function deleteOrder(id) {
+    setOrders(orders.filter((el) => el.id !== id));
+  }
+
+  function onShowItem(item) {
+    setFullItem(item);
+    setShowAboutItem(!showAboutItem);
   }
 
   return (
     <div className="wrapper">
-      <Header orders={orders} />
-      <Products items={items} onAdd={addToOrder} />
+      <Header orders={orders} onDelete={deleteOrder} />
+      <Categories chooseCategory={chooseCategory} />
+      <Products
+        onShowItem={onShowItem}
+        items={currentItems}
+        onAdd={addToOrder}
+      />
+      {showAboutItem && (
+        <ShowAboutItem
+          onShowItem={onShowItem}
+          onAdd={addToOrder}
+          item={fullItem}
+        />
+      )}
       <Footer />
     </div>
   );

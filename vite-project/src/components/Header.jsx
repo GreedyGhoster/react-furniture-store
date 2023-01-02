@@ -4,8 +4,19 @@ import Order from "./Order";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
-export default function Header({ orders }) {
+const showNothing = () => {
+  return (
+    <div className="empty">
+      <h2>Товаров нет</h2>
+    </div>
+  );
+};
+
+export default function Header({ orders, onDelete }) {
   const [cartOpen, setCartOpen] = useState(false);
+  let summa = 0;
+  orders.forEach((el) => (summa += +el.price));
+
   return (
     <header>
       <div>
@@ -21,9 +32,16 @@ export default function Header({ orders }) {
         />
         {cartOpen && (
           <div className="shop-cart">
-            {orders.map((element) => (
-              <Order key={element.id} item={element} />
-            ))}
+            {orders.length > 0 ? (
+              <div>
+                {orders.map((element) => (
+                  <Order onDelete={onDelete} key={element.id} item={element} />
+                ))}
+                <b className="summa">Сумма: {summa}$</b>
+              </div>
+            ) : (
+              showNothing()
+            )}
           </div>
         )}
       </div>

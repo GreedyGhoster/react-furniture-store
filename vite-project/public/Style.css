@@ -18,7 +18,7 @@ header {
 }
 header .logo {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 1.7rem;
 }
 header .presentation {
   margin: 50px 0;
@@ -50,6 +50,7 @@ header .presentation::before {
   color: white;
 }
 header .shop-cart-button {
+  font-size: 1.2rem;
   float: right;
   cursor: pointer;
   transition: color, transform 300ms ease;
@@ -57,14 +58,15 @@ header .shop-cart-button {
 header .shop-cart-button:hover,
 header .shop-cart-button.active {
   color: #dc3d3d;
-  transform: scale(1.1);
+  transform: scale(1.3);
 }
 header .shop-cart {
   position: absolute;
   top: 30px;
   right: 0;
   width: 450px;
-  height: 100px;
+  padding: 20px;
+  padding-bottom: 0;
   background-color: #fafafa;
   -webkit-box-shadow: 11px 5px 19px 4px rgba(34, 60, 80, 0.24);
   -moz-box-shadow: 11px 5px 19px 4px rgba(34, 60, 80, 0.24);
@@ -73,6 +75,13 @@ header .shop-cart {
 }
 header .shop-cart .item {
   width: 100%;
+  float: left;
+  margin-bottom: 20px;
+}
+header .shop-cart .empty h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  user-select: none;
 }
 header .shop-cart .item img {
   width: 70px;
@@ -86,6 +95,41 @@ header .shop-cart .item h2 {
 header .shop-cart .item b {
   color: #797979;
   font-weight: 600;
+}
+header .shop-cart .summa {
+  float: left;
+  width: 100%;
+  font-weight: 600;
+  font-size: large;
+  margin-bottom: 20px;
+}
+header .shop-cart .item .delete-button {
+  color: #ca5252;
+  float: right;
+  position: relative;
+  font-size: large;
+  cursor: pointer;
+  transition: color, transform 300ms ease;
+}
+.categories div {
+  display: inline-block;
+  background-color: #d6d6d6;
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  margin-right: 15px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 270ms ease;
+  user-select: none;
+}
+.categories div:hover {
+  border-color: silver;
+  transform: scale(1.04);
+}
+header .shop-cart .item .delete-button:hover {
+  color: #ff0000;
+  transform: scale(1.2);
 }
 header ul.tools {
   float: right;
@@ -116,24 +160,50 @@ main .Product {
   position: relative;
   padding-bottom: 20px;
 }
-main .Product img {
+main .Product img,
+.full-item img {
   border-radius: 10px;
   width: 100%;
   transition: transform 300ms ease;
+  cursor: pointer;
 }
-main .Product img:hover {
+main .Product img:hover,
+.full-item img:hover {
   transform: scale(1.03);
 }
+.full-item {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.752);
+  z-index: 10000000;
+  overflow: auto;
+}
+.full-item > div {
+  width: 600px;
+  position: relative;
+  margin: 10% auto;
+  padding: 40px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+}
 main h2,
+.full-item h2,
 main p,
-main b {
+.full-item p,
+main b,
+.full-item b {
   margin: 10px 20px;
   color: #333;
 }
-main b {
+main b,
+.full-item b {
   color: #5fa36a;
 }
-main .add-to-cart {
+main .add-to-cart,
+.full-item .add-to-cart {
   position: absolute;
   right: 20px;
   bottom: 20px;
@@ -147,11 +217,13 @@ main .add-to-cart {
   cursor: pointer;
   font-size: x-large;
   transition: transform 150ms ease;
+  user-select: none;
 }
-main .add-to-cart:hover {
+main .add-to-cart:hover,
+.full-item .add-to-cart:hover {
   transform: scale(1.05) translateY(-1px);
 }
 footer {
-  margin-top: 100%;
+  margin-top: 5%;
   text-align: center;
 }
